@@ -27,10 +27,42 @@
  *
  * @example
  *   calculateAutoFare(3)    // => 60  (30 + 15 + 15)
- *   calculateAutoFare(7, 4) // => 120 (30 + 60 + 20 + 10)
+ *   calculateAutoFare(7, 4) // => 120 (30 + 60 + 20 + 10)                         
  *   calculateAutoFare(0.5)  // => 30  (ceil to 1 km = minimum fare)
  *   calculateAutoFare(-2)   // => -1
  */
 export function calculateAutoFare(distance, waitingMinutes = 0) {
-  // Your code here
+
+  if (typeof distance !== 'number' || distance <= 0) {
+    return -1
+  }
+
+  if (typeof waitingMinutes !== 'number' || waitingMinutes < 0) {
+    return -1
+  }
+
+  distance = Math.ceil(distance)
+
+  let totalFare = 0
+  let km = 1
+
+  while (km <= distance) {
+
+    if (km === 1) {
+      totalFare += 30
+    }
+    else if (km <= 5) {
+      totalFare += 15
+    }
+    else {
+      totalFare += 10
+    }
+
+    km++
+  }
+
+  let waitingPairs = Math.ceil(waitingMinutes / 2)
+  totalFare += waitingPairs * 5
+
+  return totalFare
 }
